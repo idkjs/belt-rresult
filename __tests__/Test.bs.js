@@ -4,10 +4,10 @@
 var Block = require("bs-platform/lib/js/block.js");
 var Curry = require("bs-platform/lib/js/curry.js");
 var Format = require("bs-platform/lib/js/format.js");
+var Rresult = require("../src/rresult.bs.js");
 var Caml_obj = require("bs-platform/lib/js/caml_obj.js");
 var Pervasives = require("bs-platform/lib/js/pervasives.js");
 var Caml_js_exceptions = require("bs-platform/lib/js/caml_js_exceptions.js");
-var Rresult$BeltRresult = require("../src/rresult.bs.js");
 var Caml_builtin_exceptions = require("bs-platform/lib/js/caml_builtin_exceptions.js");
 
 function log(f) {
@@ -49,7 +49,7 @@ function test_constructors(param) {
           ]),
         "Test R.{ok,error}"
       ]);
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.ok(3), /* Ok */Block.__(0, [3]))) {
+  if (!Caml_obj.caml_equal(Rresult.R.ok(3), /* Ok */Block.__(0, [3]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -59,7 +59,7 @@ function test_constructors(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.error(/* An_error */-753331242), /* Error */Block.__(1, [/* An_error */-753331242]))) {
+  if (!Caml_obj.caml_equal(Rresult.R.error(/* An_error */-753331242), /* Error */Block.__(1, [/* An_error */-753331242]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -83,7 +83,7 @@ function test_reword_error(param) {
   var reword = function (param) {
     return /* Another_one */-476927094;
   };
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.reword_error(reword, /* Ok */Block.__(0, [3])), /* Ok */Block.__(0, [3]))) {
+  if (!Caml_obj.caml_equal(Rresult.R.reword_error(reword, /* Ok */Block.__(0, [3])), /* Ok */Block.__(0, [3]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -93,7 +93,7 @@ function test_reword_error(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.reword_error(reword, /* Error */Block.__(1, [/* An_error */-753331242])), /* Error */Block.__(1, [/* Another_one */-476927094]))) {
+  if (!Caml_obj.caml_equal(Rresult.R.reword_error(reword, /* Error */Block.__(1, [/* An_error */-753331242])), /* Error */Block.__(1, [/* Another_one */-476927094]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -114,7 +114,7 @@ function test_gets(param) {
           ]),
         "Test R.get_{ok,error}"
       ]);
-  if (Rresult$BeltRresult.R.get_ok(/* Ok */Block.__(0, [2])) !== 2) {
+  if (Rresult.R.get_ok(/* Ok */Block.__(0, [2])) !== 2) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -124,7 +124,7 @@ function test_gets(param) {
           ]
         ];
   }
-  if (Rresult$BeltRresult.R.get_error(/* Error */Block.__(1, [3])) !== 3) {
+  if (Rresult.R.get_error(/* Error */Block.__(1, [3])) !== 3) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -134,8 +134,8 @@ function test_gets(param) {
           ]
         ];
   }
-  raises_invalid_arg(Rresult$BeltRresult.R.get_ok, /* Error */Block.__(1, [3]));
-  raises_invalid_arg(Rresult$BeltRresult.R.get_error, /* Ok */Block.__(0, [2]));
+  raises_invalid_arg(Rresult.R.get_ok, /* Error */Block.__(1, [3]));
+  raises_invalid_arg(Rresult.R.get_error, /* Ok */Block.__(0, [2]));
   
 }
 
@@ -147,7 +147,7 @@ function test_bind(param) {
           ]),
         "Test R.bind"
       ]);
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.bind(/* Ok */Block.__(0, [3]), (function (v) {
+  if (!Caml_obj.caml_equal(Rresult.R.bind(/* Ok */Block.__(0, [3]), (function (v) {
                 return /* Error */Block.__(1, [String(v)]);
               })), /* Error */Block.__(1, ["3"]))) {
     throw [
@@ -159,7 +159,7 @@ function test_bind(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.bind(/* Ok */Block.__(0, [3]), (function (v) {
+  if (!Caml_obj.caml_equal(Rresult.R.bind(/* Ok */Block.__(0, [3]), (function (v) {
                 return /* Ok */Block.__(0, [String(v)]);
               })), /* Ok */Block.__(0, ["3"]))) {
     throw [
@@ -171,7 +171,7 @@ function test_bind(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.bind(/* Error */Block.__(1, [1]), (function (v) {
+  if (!Caml_obj.caml_equal(Rresult.R.bind(/* Error */Block.__(1, [1]), (function (v) {
                 return /* Ok */Block.__(0, [String(v)]);
               })), /* Error */Block.__(1, [1]))) {
     throw [
@@ -194,7 +194,7 @@ function test_map(param) {
           ]),
         "Test R.map"
       ]);
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.map((function (v) {
+  if (!Caml_obj.caml_equal(Rresult.R.map((function (v) {
                 return String(v);
               }), /* Ok */Block.__(0, [2])), /* Ok */Block.__(0, ["2"]))) {
     throw [
@@ -206,7 +206,7 @@ function test_map(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.map((function (v) {
+  if (!Caml_obj.caml_equal(Rresult.R.map((function (v) {
                 return String(v);
               }), /* Error */Block.__(1, [2])), /* Error */Block.__(1, [2]))) {
     throw [
@@ -229,7 +229,7 @@ function test_join(param) {
           ]),
         "Test R.join"
       ]);
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.join(/* Ok */Block.__(0, [/* Ok */Block.__(0, [3])])), /* Ok */Block.__(0, [3]))) {
+  if (!Caml_obj.caml_equal(Rresult.R.join(/* Ok */Block.__(0, [/* Ok */Block.__(0, [3])])), /* Ok */Block.__(0, [3]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -239,7 +239,7 @@ function test_join(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.join(/* Ok */Block.__(0, [/* Error */Block.__(1, [2])])), /* Error */Block.__(1, [2]))) {
+  if (!Caml_obj.caml_equal(Rresult.R.join(/* Ok */Block.__(0, [/* Error */Block.__(1, [2])])), /* Error */Block.__(1, [2]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -249,7 +249,7 @@ function test_join(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.join(/* Error */Block.__(1, [3])), /* Error */Block.__(1, [3]))) {
+  if (!Caml_obj.caml_equal(Rresult.R.join(/* Error */Block.__(1, [3])), /* Error */Block.__(1, [3]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -259,7 +259,7 @@ function test_join(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.join(/* Error */Block.__(1, [4])), /* Error */Block.__(1, [4]))) {
+  if (!Caml_obj.caml_equal(Rresult.R.join(/* Error */Block.__(1, [4])), /* Error */Block.__(1, [4]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -280,7 +280,7 @@ function test_msgs(param) {
           ]),
         "Test error messages."
       ]);
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.msg("bla"), /* `Msg */[
+  if (!Caml_obj.caml_equal(Rresult.R.msg("bla"), /* `Msg */[
           3854881,
           "bla"
         ])) {
@@ -293,7 +293,7 @@ function test_msgs(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Curry._1(Rresult$BeltRresult.R.msgf(/* Format */[
+  if (!Caml_obj.caml_equal(Curry._1(Rresult.R.msgf(/* Format */[
                   /* String_literal */Block.__(11, [
                       "bla",
                       /* Int */Block.__(4, [
@@ -317,7 +317,7 @@ function test_msgs(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.error_msg("bla"), /* Error */Block.__(1, [/* `Msg */[
+  if (!Caml_obj.caml_equal(Rresult.R.error_msg("bla"), /* Error */Block.__(1, [/* `Msg */[
               3854881,
               "bla"
             ]]))) {
@@ -330,7 +330,7 @@ function test_msgs(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Curry._1(Rresult$BeltRresult.R.error_msgf(/* Format */[
+  if (!Caml_obj.caml_equal(Curry._1(Rresult.R.error_msgf(/* Format */[
                   /* String_literal */Block.__(11, [
                       "bla",
                       /* Int */Block.__(4, [
@@ -360,7 +360,7 @@ function test_msgs(param) {
             s + "++"
           ];
   };
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.reword_error_msg(true, reword, /* Ok */Block.__(0, [2])), /* Ok */Block.__(0, [2]))) {
+  if (!Caml_obj.caml_equal(Rresult.R.reword_error_msg(true, reword, /* Ok */Block.__(0, [2])), /* Ok */Block.__(0, [2]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -370,7 +370,7 @@ function test_msgs(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.reword_error_msg(false, reword, /* Ok */Block.__(0, [2])), /* Ok */Block.__(0, [2]))) {
+  if (!Caml_obj.caml_equal(Rresult.R.reword_error_msg(false, reword, /* Ok */Block.__(0, [2])), /* Ok */Block.__(0, [2]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -380,7 +380,7 @@ function test_msgs(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.reword_error_msg(true, reword, /* Error */Block.__(1, [/* `Msg */[
+  if (!Caml_obj.caml_equal(Rresult.R.reword_error_msg(true, reword, /* Error */Block.__(1, [/* `Msg */[
                   3854881,
                   "ha"
                 ]])), /* Error */Block.__(1, [/* `Msg */[
@@ -396,7 +396,7 @@ function test_msgs(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.reword_error_msg(false, reword, /* Error */Block.__(1, [/* `Msg */[
+  if (!Caml_obj.caml_equal(Rresult.R.reword_error_msg(false, reword, /* Error */Block.__(1, [/* `Msg */[
                   3854881,
                   "ha"
                 ]])), /* Error */Block.__(1, [/* `Msg */[
@@ -421,7 +421,7 @@ function test_msgs(param) {
                 "E"
               ]);
   };
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.error_to_msg(pp_error, /* Ok */Block.__(0, [2])), /* Ok */Block.__(0, [2]))) {
+  if (!Caml_obj.caml_equal(Rresult.R.error_to_msg(pp_error, /* Ok */Block.__(0, [2])), /* Ok */Block.__(0, [2]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -431,7 +431,7 @@ function test_msgs(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.error_to_msg(pp_error, /* Error */Block.__(1, [/* E */69])), /* Error */Block.__(1, [/* `Msg */[
+  if (!Caml_obj.caml_equal(Rresult.R.error_to_msg(pp_error, /* Error */Block.__(1, [/* E */69])), /* Error */Block.__(1, [/* `Msg */[
               3854881,
               "E"
             ]]))) {
@@ -444,7 +444,7 @@ function test_msgs(param) {
           ]
         ];
   }
-  if (Rresult$BeltRresult.R.error_msg_to_invalid_arg(/* Ok */Block.__(0, [2])) !== 2) {
+  if (Rresult.R.error_msg_to_invalid_arg(/* Ok */Block.__(0, [2])) !== 2) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -454,7 +454,7 @@ function test_msgs(param) {
           ]
         ];
   }
-  raises_invalid_arg(Rresult$BeltRresult.R.error_msg_to_invalid_arg, /* Error */Block.__(1, [/* `Msg */[
+  raises_invalid_arg(Rresult.R.error_msg_to_invalid_arg, /* Error */Block.__(1, [/* `Msg */[
             3854881,
             "E"
           ]]));
@@ -475,7 +475,7 @@ function test_exn_trap(param) {
   var do_raise = function (param) {
     throw Pervasives.Exit;
   };
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.trap_exn(no_raise, 3), /* Ok */Block.__(0, ["3"]))) {
+  if (!Caml_obj.caml_equal(Rresult.R.trap_exn(no_raise, 3), /* Ok */Block.__(0, ["3"]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -485,7 +485,7 @@ function test_exn_trap(param) {
           ]
         ];
   }
-  var match = Rresult$BeltRresult.R.trap_exn(do_raise, 3);
+  var match = Rresult.R.trap_exn(do_raise, 3);
   if (match.tag) {
     var match$1 = match[0];
     var exit = 0;
@@ -524,7 +524,7 @@ function test_is(param) {
           ]),
         "Test R.is_{ok,error}"
       ]);
-  if (!Rresult$BeltRresult.R.is_ok(/* Ok */Block.__(0, [2]))) {
+  if (!Rresult.R.is_ok(/* Ok */Block.__(0, [2]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -534,7 +534,7 @@ function test_is(param) {
           ]
         ];
   }
-  if (Rresult$BeltRresult.R.is_ok(/* Error */Block.__(1, [2]))) {
+  if (Rresult.R.is_ok(/* Error */Block.__(1, [2]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -544,7 +544,7 @@ function test_is(param) {
           ]
         ];
   }
-  if (!Rresult$BeltRresult.R.is_error(/* Error */Block.__(1, [2]))) {
+  if (!Rresult.R.is_error(/* Error */Block.__(1, [2]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -554,7 +554,7 @@ function test_is(param) {
           ]
         ];
   }
-  if (Rresult$BeltRresult.R.is_error(/* Ok */Block.__(0, [2]))) {
+  if (Rresult.R.is_error(/* Ok */Block.__(0, [2]))) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -575,7 +575,7 @@ function test_converting(param) {
           ]),
         "Test R.{to,of}_{option,presult}"
       ]);
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.to_option(/* Ok */Block.__(0, [3])), 3)) {
+  if (!Caml_obj.caml_equal(Rresult.R.to_option(/* Ok */Block.__(0, [3])), 3)) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -585,7 +585,7 @@ function test_converting(param) {
           ]
         ];
   }
-  if (Rresult$BeltRresult.R.to_option(/* Error */Block.__(1, [3])) !== undefined) {
+  if (Rresult.R.to_option(/* Error */Block.__(1, [3])) !== undefined) {
     throw [
           Caml_builtin_exceptions.assert_failure,
           /* tuple */[
@@ -595,7 +595,7 @@ function test_converting(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.of_option((function (param) {
+  if (!Caml_obj.caml_equal(Rresult.R.of_option((function (param) {
                 return /* Error */Block.__(1, ["none"]);
               }), 3), /* Ok */Block.__(0, [3]))) {
     throw [
@@ -607,7 +607,7 @@ function test_converting(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.of_option((function (param) {
+  if (!Caml_obj.caml_equal(Rresult.R.of_option((function (param) {
                 return /* Error */Block.__(1, ["none"]);
               }), undefined), /* Error */Block.__(1, ["none"]))) {
     throw [
@@ -619,7 +619,7 @@ function test_converting(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.to_presult(/* Ok */Block.__(0, [3])), /* `Ok */[
+  if (!Caml_obj.caml_equal(Rresult.R.to_presult(/* Ok */Block.__(0, [3])), /* `Ok */[
           17724,
           3
         ])) {
@@ -632,7 +632,7 @@ function test_converting(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.to_presult(/* Error */Block.__(1, [3])), /* `Error */[
+  if (!Caml_obj.caml_equal(Rresult.R.to_presult(/* Error */Block.__(1, [3])), /* `Error */[
           106380200,
           3
         ])) {
@@ -645,7 +645,7 @@ function test_converting(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.of_presult(/* `Ok */[
+  if (!Caml_obj.caml_equal(Rresult.R.of_presult(/* `Ok */[
               17724,
               3
             ]), /* Ok */Block.__(0, [3]))) {
@@ -658,7 +658,7 @@ function test_converting(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.of_presult(/* `Error */[
+  if (!Caml_obj.caml_equal(Rresult.R.of_presult(/* `Error */[
               106380200,
               3
             ]), /* Error */Block.__(1, [3]))) {
@@ -682,7 +682,7 @@ function test_ignoring(param) {
           ]),
         "Test.[k]ignore_error"
       ]);
-  if (Rresult$BeltRresult.R.ignore_error((function (param) {
+  if (Rresult.R.ignore_error((function (param) {
             return 3;
           }), /* Ok */Block.__(0, [4])) !== 4) {
     throw [
@@ -694,7 +694,7 @@ function test_ignoring(param) {
           ]
         ];
   }
-  if (Rresult$BeltRresult.R.ignore_error((function (param) {
+  if (Rresult.R.ignore_error((function (param) {
             return 3;
           }), /* Error */Block.__(1, [4])) !== 3) {
     throw [
@@ -706,7 +706,7 @@ function test_ignoring(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.kignore_error((function (param) {
+  if (!Caml_obj.caml_equal(Rresult.R.kignore_error((function (param) {
                 return /* Ok */Block.__(0, [3]);
               }), /* Ok */Block.__(0, [4])), /* Ok */Block.__(0, [4]))) {
     throw [
@@ -718,7 +718,7 @@ function test_ignoring(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.kignore_error((function (param) {
+  if (!Caml_obj.caml_equal(Rresult.R.kignore_error((function (param) {
                 return /* Ok */Block.__(0, [3]);
               }), /* Error */Block.__(1, [4])), /* Ok */Block.__(0, [3]))) {
     throw [
@@ -730,7 +730,7 @@ function test_ignoring(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.kignore_error((function (param) {
+  if (!Caml_obj.caml_equal(Rresult.R.kignore_error((function (param) {
                 return /* Error */Block.__(1, [3]);
               }), /* Ok */Block.__(0, [4])), /* Ok */Block.__(0, [4]))) {
     throw [
@@ -742,7 +742,7 @@ function test_ignoring(param) {
           ]
         ];
   }
-  if (!Caml_obj.caml_equal(Rresult$BeltRresult.R.kignore_error((function (param) {
+  if (!Caml_obj.caml_equal(Rresult.R.kignore_error((function (param) {
                 return /* Error */Block.__(1, [3]);
               }), /* Error */Block.__(1, [4])), /* Error */Block.__(1, [3]))) {
     throw [
